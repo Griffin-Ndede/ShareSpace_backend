@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # local
-    'FAQs',
+    'Resources',
 ]
 
 # configuring the django rest framework
@@ -145,3 +146,9 @@ CORS_ORIGIN_WHITELIST = (
 'http://localhost:8000',
 "http://localhost:5173",
 )
+
+# Actual directory user files go to
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
+
+# URL used to access the media
+MEDIA_URL = '/media/'
