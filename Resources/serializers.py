@@ -12,4 +12,4 @@ class CategoriesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Categories
-        fields = ['id', 'title', 'image_url']
+        fields ="__all__"
