@@ -6,4 +6,4 @@ class FAQs(models.Model):
     answer = models.TextField()
 
     def __str__(self):
-        return self.Question
+        return self.title
