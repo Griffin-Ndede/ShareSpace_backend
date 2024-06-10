@@ -1,9 +1,10 @@
 from rest_framework import generics, permissions, status
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from .models import Categories, FAQs, Products
-from .serializers import CategoriesSerializer, FAQsSerializer, ProductsSerializer
+from .serializers import CategoriesSerializer, FAQsSerializer, ProductsSerializer, ProductDetailsSerializer
 
 
 class FAQsCreateView(generics.CreateAPIView):
@@ -51,4 +52,11 @@ class ProductsView(APIView):
             print('error', Products_serializer.errors)
             return Response(Products_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        
+class ProductDetailsView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs.get('id')
+        product = get_object_or_404(Products, id=product_id)
+        serializer = ProductDetailsSerializer(product)
+        return Response(serializer.data)

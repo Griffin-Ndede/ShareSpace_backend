@@ -6,4 +6,5 @@ urlpatterns = [
     path('FAQs/create/', views.FAQsCreateView.as_view(), name='message-create'), #post request
     path('categories/', views.CategoriesView.as_view(), name = 'Categories'),
     path('products/', views.ProductsView.as_view(), name="products"),
+    path('products/<int:id>/', views.ProductDetailsView.as_view(), name="productdetails"),
 ]

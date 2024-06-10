@@ -20,3 +20,10 @@ class ProductsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
         fields = "__all__"
+
+class ProductDetailsSerializer(serializers.ModelSerializer):
+    photos_url = serializers.ImageField(required=False)
+
+    class Meta:
+        model = Products
+        fields = "__all__"
