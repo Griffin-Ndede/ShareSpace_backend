@@ -41,3 +41,14 @@ class ProductsView(APIView):
         products = Products.objects.all()
         serializer = ProductsSerializer(products, many= True)
         return Response(serializer.data)
+    
+    def post(self, request, *args, **kwargs):
+        Products_serializer = ProductsSerializer(data=request.data)
+        if Products_serializer.is_valid():
+            Products_serializer.save()
+            return Response(Products_serializer.data, status= status.HTTP_201_CREATED)
+        else:
+            print('error', Products_serializer.errors)
+            return Response(Products_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        

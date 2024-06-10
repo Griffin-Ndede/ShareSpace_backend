@@ -7,10 +7,14 @@ class FAQs(models.Model):
 
     def __str__(self):
         return self.title
-    
+
 def upload_to(instance, filename):
-    # This function generates the upload path for the image
-    return 'category_images/{filename}'.format(filename=filename)
+    # Determine the path based on the model class
+    if isinstance(instance, Categories):
+        return f'category_images/{filename}'
+    elif isinstance(instance, Products):
+        return f'product_images/{filename}'
+    return f'uploads/{filename}'
 
 class Categories(models.Model):
     title = models.CharField(max_length=100)
@@ -31,3 +35,6 @@ class Products(models.Model):
     preferreduser = models.CharField(max_length=255)
     price = models.IntegerField()
     userconsiderations = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
