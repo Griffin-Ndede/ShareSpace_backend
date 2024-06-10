@@ -2,8 +2,8 @@ from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
-from .models import Categories, FAQs
-from .serializers import CategoriesSerializer, FAQsSerializer
+from .models import Categories, FAQs, Products
+from .serializers import CategoriesSerializer, FAQsSerializer, ProductsSerializer
 
 
 class FAQsCreateView(generics.CreateAPIView):
@@ -33,4 +33,11 @@ class CategoriesView(APIView):
         else:
             print('error', Categoriess_serializer.errors)
             return Response(Categoriess_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class ProductsView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
 
+    def get(self, request, *args, **kwargs):
+        products = Products.objects.all()
+        serializer = ProductsSerializer(products, many= True)
+        return Response(serializer.data)
