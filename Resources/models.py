@@ -46,9 +46,9 @@ class Products(models.Model):
     functionalities = models.CharField(max_length=255)
     condition = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    preferreduser = models.CharField(max_length=255)
-    price = models.IntegerField()
-    userconsiderations = models.CharField(max_length=255)
+    preferredUser = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    usageconsiderations = models.CharField(max_length=255)
 
     def __str__(self):
         return self.title
