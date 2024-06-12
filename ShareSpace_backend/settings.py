@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,6 +73,7 @@ CORS_ORIGIN_WHITELIST = (
 'http://localhost:3000',
 'http://localhost:8000',
 "http://localhost:5173",
+"render"
 )
 
 
@@ -99,11 +101,13 @@ WSGI_APPLICATION = 'ShareSpace_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# replacing the sqlite database with postgresql 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+       'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgres://sharespace_database_user:g7Mg6YBetNu9W7oOlb4qRM4WmiZlZFZ3@dpg-cpkpfqq0si5c73cvcijg-a.oregon-postgres.render.com/sharespace_database',
+        conn_max_age=600
+    )
 }
 
 
