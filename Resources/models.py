@@ -52,3 +52,15 @@ class Products(models.Model):
 
     def __str__(self):
         return self.title
+
+class ContactForm1(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    phone = models.IntegerField()
+    item = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
+    startDate = models.DateField(max_length=200)
+    endDate = models.DateField(max_length=200)
+
+    def __str__(self):
+        return self.name

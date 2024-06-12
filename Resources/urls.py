@@ -7,4 +7,5 @@ urlpatterns = [
     path('categories/', views.CategoriesView.as_view(), name = 'Categories'),
     path('products/', views.ProductsView.as_view(), name="products"),
     path('products/<int:id>/', views.ProductDetailsView.as_view(), name="productdetails"),
+    path('submit_contact_form/', views.SubmitContactFormView.as_view(), name='submit_contact_form')
 ]

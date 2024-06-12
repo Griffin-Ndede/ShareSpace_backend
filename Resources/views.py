@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from .models import Categories, FAQs, Products
-from .serializers import CategoriesSerializer, FAQsSerializer, ProductsSerializer, ProductDetailsSerializer
+from .serializers import CategoriesSerializer, FAQsSerializer, ProductsSerializer, ProductDetailsSerializer, ContactFormSerializer
 
 
 class FAQsCreateView(generics.CreateAPIView):
@@ -60,3 +60,13 @@ class ProductDetailsView(APIView):
         product = get_object_or_404(Products, id=product_id)
         serializer = ProductDetailsSerializer(product)
         return Response(serializer.data)
+    
+class SubmitContactFormView(APIView):
+    def post(self, request, format=None):
+        FormSerializer = ContactFormSerializer(data=request.data)
+ 
+        if FormSerializer.is_valid():
+            FormSerializer.save()
+            return Response({'message': 'Form submitted successfully!'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(FormSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
