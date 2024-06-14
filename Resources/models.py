@@ -38,17 +38,20 @@ class Categories(models.Model):
         return self.title
     
 class Products(models.Model):
-    producttype = models.CharField(max_length=255)
+    category = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     description = models.TextField()
     photos = models.ImageField(upload_to=upload_to, null=True, validators=[ValidateImageFileExtension()])
-    brand = models.CharField(max_length=255)
-    functionalities = models.CharField(max_length=255)
+    startDate = models.DateField(max_length=200)
+    endDate = models.DateField(max_length=200)
     condition = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
-    preferredUser = models.CharField(max_length=255)
+    deposit = models.CharField(max_length=255)
+    accessories = models.CharField(max_length=255)
+    name= models.CharField(max_length=255)
+    phoneNumber = models.IntegerField()
+    emailAddress  = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    usageconsiderations = models.CharField(max_length=255)
 
     def __str__(self):
         return self.title
