@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     # local
     'Resources',
+    "emails"
 ]
 
 # configuring the django rest framework
