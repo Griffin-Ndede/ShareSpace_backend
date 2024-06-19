@@ -27,8 +27,7 @@ SECRET_KEY = 'django-insecure-ky^rbr+4fm#-#_lqcs+e8dk1b(+6*335e8^owo1z@tl4c&v$-!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [".awsapprunner.com"]
 
 # Application definition
 
@@ -46,7 +45,6 @@ INSTALLED_APPS = [
 
     # local
     'Resources',
-    "emails"
 ]
 
 # configuring the django rest framework
@@ -61,6 +59,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware', #CORS
     'django.middleware.common.CommonMiddleware',
@@ -144,6 +143,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
