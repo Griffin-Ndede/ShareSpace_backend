@@ -76,7 +76,7 @@ SQLAlchemy-serializer==1.4.1
 sqlparse==0.5.0
 # systemd-python==234
 # typing_extensions==4.9.0
-ubuntu-pro-client==8001
+# ubuntu-pro-client==8001
 ufw==0.36.1
 unattended-upgrades==0.1
 uvicorn==0.30.1
