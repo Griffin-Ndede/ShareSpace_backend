@@ -106,7 +106,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'ShareSpace_backend.wsgi.application'
+WSGI_APPLICATION = 'ShareSpace_backend.wsgi.application'
 
 
 # Database
