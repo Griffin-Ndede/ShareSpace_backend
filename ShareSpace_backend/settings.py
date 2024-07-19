@@ -179,4 +179,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # URL used to access the media
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://sharespace-backend-4vs9.onrender.com/media/'
