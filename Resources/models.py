@@ -50,7 +50,7 @@ class Products(models.Model):
     accessories = models.CharField(max_length=255, null=True)
     name= models.CharField(max_length=255)
     phoneNumber = models.IntegerField(null=True)
-    emailAddress  = models.TextField(max_length=255, null=True)
+    emailAddress  = models.CharField(max_length=255, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
