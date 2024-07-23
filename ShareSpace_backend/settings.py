@@ -16,14 +16,14 @@ import dj_database_url
 import environ
 
 # Initialize environment variables
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 
 # Set the base directory two levels up from the settings.py directory
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Take environment variables from the .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+# environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -119,16 +119,20 @@ WSGI_APPLICATION = 'ShareSpace_backend.wsgi.application'
 
 # replacing the sqlite database with postgresql 
 
-# DATABASES = {
-#     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.parse(
+        'postgres://sharespace_db_user:WzKCArP9hV4syigPIuSfkXv9DulIEEPX@dpg-cqfhrs5ds78s73bup8g0-a.oregon-postgres.render.com/sharespace_db',
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / "db.sqlite3",
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
