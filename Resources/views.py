@@ -5,6 +5,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from .models import Categories, FAQs, Products
 from .serializers import CategoriesSerializer, FAQsSerializer, ProductsSerializer, ProductDetailsSerializer, ContactFormSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 
 class FAQsCreateView(generics.CreateAPIView):
@@ -14,6 +17,8 @@ class FAQsCreateView(generics.CreateAPIView):
     http_method_names = ['post']
 
 class FAQsListView(generics.ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = FAQs.objects.all()
     serializer_class = FAQsSerializer
     http_method_names = ['get']
