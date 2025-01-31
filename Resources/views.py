@@ -10,6 +10,14 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 
+class Home(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        content = {'message': 'Hello, World!'}
+        return Response(content)
+  
 class FAQsCreateView(generics.CreateAPIView):
     queryset = FAQs.objects.all()
     serializer_class = FAQsSerializer
@@ -17,8 +25,11 @@ class FAQsCreateView(generics.CreateAPIView):
     http_method_names = ['post']
 
 class FAQsListView(generics.ListAPIView):
+    # authentication permissions
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+
     queryset = FAQs.objects.all()
     serializer_class = FAQsSerializer
     http_method_names = ['get']
