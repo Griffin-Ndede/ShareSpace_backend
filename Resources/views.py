@@ -27,6 +27,7 @@ class FAQsCreateView(generics.CreateAPIView):
 class FAQsListView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    
     queryset = FAQs.objects.all()
     serializer_class = FAQsSerializer
     http_method_names = ['get']
