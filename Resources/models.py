@@ -2,6 +2,12 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 import os
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    pass
+
 
 # Validators
 @deconstructible
