@@ -72,3 +72,14 @@ class ContactForm1(models.Model):
 
     def __str__(self):
         return self.name
+
+class User(models.Model):
+    username = models.CharField(max_length=200)
+    firstname = models.CharField(max_length=200)
+    lastname = models.CharField(max_length=200)
+    email =models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    password2 = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.username

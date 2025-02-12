@@ -20,13 +20,13 @@ class Home(APIView):
 
 class FAQsCreateView(generics.CreateAPIView):
     queryset = FAQs.objects.all()
-    serializer_class = FAQsSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # serializer_class = FAQsSerializer
+    # permission_classes = [permissions.IsAuthenticated]
     http_method_names = ['post']
 
 class FAQsListView(generics.ListAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
     
     queryset = FAQs.objects.all()
     serializer_class = FAQsSerializer
