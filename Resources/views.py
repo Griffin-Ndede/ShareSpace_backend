@@ -1,37 +1,34 @@
-from rest_framework import generics, permissions, status
-from django.shortcuts import get_object_or_404
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from .models import Category, FAQ, Product
 from .serializers import (
     CategoriesSerializer, 
     FAQsSerializer, 
-    ProductsSerializer, 
+    ProductsSerializer,  
     ProductDetailsSerializer, 
-    ContactFormSerializer,
+    ContactFormSerializer
 )
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class Home(APIView):
     def get(self, request):
         return Response({'message': 'Hello, World!'})
 
-class FAQsCreateView(generics.CreateAPIView):
-    queryset = FAQ.objects.all()
-    # serializer_class = FAQsSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-    http_method_names = ['post']
+class FAQsCreateView(APIView):
+    def post(self, request):
+        serializer = FAQsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class FAQsListView(generics.ListAPIView):
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAuthenticated]
-    
-    queryset = FAQ.objects.all()
-    serializer_class = FAQsSerializer
-    http_method_names = ['get']
-
+class FAQsListView(APIView):
+    def get(self, request):
+        faqs = FAQ.objects.all()
+        serializer = FAQsSerializer(faqs, many=True)
+        return Response(serializer.data)
 
 class CategoriesView(APIView):
     parser_classes = (MultiPartParser, FormParser)
@@ -63,10 +60,11 @@ class ProductsView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ProductDetailsView(generics.RetrieveAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductDetailsSerializer
-    lookup_field = 'id'
+class ProductDetailsView(APIView):
+    def get(self, request, id):
+        product = get_object_or_404(Product, id=id)
+        serializer = ProductDetailsSerializer(product)
+        return Response(serializer.data)
 
 class SubmitContactFormView(APIView):
     def post(self, request):
@@ -75,3 +73,4 @@ class SubmitContactFormView(APIView):
             serializer.save()
             return Response({'message': 'Form submitted successfully!'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
