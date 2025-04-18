@@ -15,28 +15,28 @@ class ValidateImageFileExtension:
 
 # File upload paths
 def upload_to(instance, filename):
-    if isinstance(instance, Categories):
+    if isinstance(instance, Category):
         return f'category_images/{filename}'
     elif isinstance(instance, ProductImage):
         return f'product_images/{filename}'
     return f'uploads/{filename}'
 
 # Models
-class FAQs(models.Model):
+class FAQ(models.Model):
     title = models.CharField(max_length=300)
     answer = models.TextField()
 
     def __str__(self):
         return self.title
 
-class Categories(models.Model):
+class Category(models.Model):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to=upload_to, null=True, validators=[ValidateImageFileExtension()])
 
     def __str__(self):
         return self.title
 
-class Products(models.Model):
+class Product(models.Model):
     category = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -55,7 +55,7 @@ class Products(models.Model):
         return self.title
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='photos')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='photos')
     image = models.ImageField(upload_to=upload_to, validators=[ValidateImageFileExtension()])
 
     def __str__(self):

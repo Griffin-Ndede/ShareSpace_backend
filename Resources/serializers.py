@@ -1,16 +1,16 @@
 from rest_framework import serializers
-from .models import Categories, FAQs, Products, ProductImage, ContactForm1, User
+from .models import Category, FAQ, Product, ProductImage, ContactForm1, User
 
 
 class FAQsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = FAQs
+        model = FAQ
         fields = '__all__'
 
 
 class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Categories
+        model = Category
         fields = "__all__"
 
 
@@ -24,7 +24,7 @@ class ProductsSerializer(serializers.ModelSerializer):
     photos = ProductImageSerializer(many=True, read_only=True)  # Nested serializer for photos
 
     class Meta:
-        model = Products
+        model = Product
         fields = "__all__"
 
 
@@ -32,7 +32,7 @@ class ProductDetailsSerializer(serializers.ModelSerializer):
     photos = ProductImageSerializer(many=True, read_only=True)  # Nested serializer for photos
 
     class Meta:
-        model = Products
+        model = Product
         fields = "__all__"
 
 

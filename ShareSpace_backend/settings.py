@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'corsheaders',
     'Resources',
+    'users',
 ]
 
 REST_FRAMEWORK = {

@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
-from .models import Categories, FAQs, Products
+from .models import Category, FAQ, Product
 from .serializers import (
     CategoriesSerializer, 
     FAQsSerializer, 
@@ -20,7 +20,7 @@ class Home(APIView):
         return Response({'message': 'Hello, World!'})
 
 class FAQsCreateView(generics.CreateAPIView):
-    queryset = FAQs.objects.all()
+    queryset = FAQ.objects.all()
     # serializer_class = FAQsSerializer
     # permission_classes = [permissions.IsAuthenticated]
     http_method_names = ['post']
@@ -29,7 +29,7 @@ class FAQsListView(generics.ListAPIView):
     # authentication_classes = [JWTAuthentication]
     # permission_classes = [IsAuthenticated]
     
-    queryset = FAQs.objects.all()
+    queryset = FAQ.objects.all()
     serializer_class = FAQsSerializer
     http_method_names = ['get']
     
@@ -46,7 +46,7 @@ class CategoriesView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request):
-        categories = Categories.objects.all()
+        categories = Category.objects.all()
         serializer = CategoriesSerializer(categories, many=True)
         return Response(serializer.data)
 
@@ -61,7 +61,7 @@ class ProductsView(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request):
-        products = Products.objects.all()
+        products = Product.objects.all()
         serializer = ProductsSerializer(products, many=True)
         return Response(serializer.data)
 
@@ -73,7 +73,7 @@ class ProductsView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductDetailsView(generics.RetrieveAPIView):
-    queryset = Products.objects.all()
+    queryset = Product.objects.all()
     serializer_class = ProductDetailsSerializer
     lookup_field = 'id'
 
