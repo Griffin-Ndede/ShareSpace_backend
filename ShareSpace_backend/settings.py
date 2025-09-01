@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'corsheaders',
     'Apps.Resources',
-    'Apps.users',
     'Apps.Accounts',
 ]
 
@@ -86,23 +85,12 @@ REST_FRAMEWORK = {
     ),
 }
 
-
-# DATABASES = {
-#     'default': dj_database_url.parse(
-#         'postgresql://sharespace_db_kks8_user:kS07RiB7iVMTZJmAW9ZX33vkXfUGMLGt@dpg-cqfm49iju9rs73bvjav0-a.oregon-postgres.render.com/sharespace_db_kks8',
-#         conn_max_age=600,
-#         ssl_require=True
-#     )
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-AUTH_USER_MODEL = 'users.User'
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -144,4 +132,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
-LOGIN_REDIRECT_URL = "/"  # new
+LOGIN_REDIRECT_URL = "home"  # new
+LOGOUT_REDIRECT_URL = "home"  # new
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # new
