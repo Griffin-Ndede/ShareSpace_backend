@@ -23,8 +23,8 @@ def upload_to(instance, filename):
 
 # Models
 class FAQ(models.Model):
-    title = models.CharField(max_length=300)
-    answer = models.TextField()
+    title = models.CharField(max_length=100)
+    answer = models.TextField(max_length=300)
 
     def __str__(self):
         return self.title
