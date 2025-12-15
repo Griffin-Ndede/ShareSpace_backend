@@ -21,24 +21,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView  # new
 from django.contrib import admin
-from django.urls import include, path, re_path
-from Apps.Accounts.views import GoogleLogin, GoogleLoginCallback, LoginPage
+from django.urls import include, path
 
 
 urlpatterns = [
-    path("", include("Apps.Resources.urls")),
     path("admin/", admin.site.urls),
-    path("api/v1/auth/", include("dj_rest_auth.urls")),
-    path('api/v1/auth/registration/', include('dj_rest_auth.registration.urls')),
-    path("accounts/", include("Apps.Accounts.urls")),  # new
-    path("accounts/", include("django.contrib.auth.urls")),  # new
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),  # new
-    path("login/", LoginPage.as_view(), name="login"),
-    path("api/v1/auth/", include("dj_rest_auth.urls")),
-    re_path(r"^api/v1/auth/accounts/", include("allauth.urls")),
-    path("api/v1/auth/registration/", include("dj_rest_auth.registration.urls")),
-    path("api/v1/auth/google/", GoogleLogin.as_view(), name="google_login"),
-    path("api/v1/auth/google/callback/",GoogleLoginCallback.as_view(),name="google_login_callback",),
+    path("", include("Apps.Resources.urls")),
 ]
 
 if settings.DEBUG:

@@ -32,19 +32,10 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework.authtoken",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",  # <- Support Login with Google
-    "dj_rest_auth.registration",
-    "dj_rest_auth",
     "corsheaders",
     "Apps.Resources",
-    "Apps.Accounts",
 ]
 
-# django.contrib.sites
-SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -56,7 +47,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
 ]
 
 CORS_ORIGIN_WHITELIST = (
@@ -85,31 +75,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "ShareSpace_backend.wsgi.application"
-
-
-# djangorestframework-simplejwt
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-}
-# dj-rest-auth
-REST_AUTH = {
-    "USE_JWT": True,
-    "JWT_AUTH_COOKIE": "_auth",  # Name of access token cookie
-    "JWT_AUTH_REFRESH_COOKIE": "_refresh",  # Name of refresh token cookie
-    "JWT_AUTH_HTTPONLY": False,  # Makes sure refresh token is sent
-}
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
-    ),
-}
-
-# django allauth configuration
-ACCOUNT_LOGIN_METHODS = {"email"}  # Use Email / Password authentication
-ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
-ACCOUNT_EMAIL_VERIFICATION = "none"  # Do not require email confirmation
-
 
 DATABASES = {
     "default": {
@@ -156,46 +121,3 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
-
-
-LOGIN_REDIRECT_URL = "home"  # new
-LOGOUT_REDIRECT_URL = "home"  # new
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  # new
-
-
-# Django SMTP
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "omondigriffin4@gmail.com"  # email sending address
-EMAIL_HOST_PASSWORD = "zdnq riqi llwt zidp"
-
-
-# Google OAuth
-GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_OAUTH_CLIENT_ID")
-GOOGLE_OAUTH_CLIENT_SECRET = os.getenv("GOOGLE_OAUTH_CLIENT_SECRET")
-GOOGLE_OAUTH_CALLBACK_URL = os.getenv("GOOGLE_OAUTH_CALLBACK_URL")
-
-
-# django-allauth (social)
-# Authenticate if local account with this email address already exists
-SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
-# Connect local account and social account if local account with that email address already exists
-SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APPS": [
-            {
-                "client_id": GOOGLE_OAUTH_CLIENT_ID,
-                "secret": GOOGLE_OAUTH_CLIENT_SECRET,
-                "key": "",
-            },
-        ],
-        "SCOPE": ["profile", "email"],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
-    }
-}
