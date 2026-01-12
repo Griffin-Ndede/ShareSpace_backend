@@ -12,9 +12,9 @@ from .serializers import (
     ContactFormSerializer
 )
 
-# class Home(APIView):
-#     def get(self, request):
-#         return Response({'message': 'Hello, World!'})
+class Home(APIView):
+    def get(self, request):
+        return Response({'message': 'Hello, World!'})
 
 class FAQsCreateView(APIView):
     def post(self, request):
