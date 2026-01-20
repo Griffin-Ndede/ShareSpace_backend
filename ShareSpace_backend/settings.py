@@ -83,6 +83,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "Accounts.User"
+ 
 
 AUTH_PASSWORD_VALIDATORS = [
     {
