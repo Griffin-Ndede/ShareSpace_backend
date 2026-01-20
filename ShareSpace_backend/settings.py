@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "Apps.Resources",
+    "Apps.Accounts",
 ]
 
 
@@ -81,6 +82,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
