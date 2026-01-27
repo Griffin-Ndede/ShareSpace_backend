@@ -41,7 +41,7 @@ class Meta:
 
 class UserSerializer(serializers.ModelSerializer):
     # Nest the UserProfileSerializer to handle user profile data together with the user
-    profile = serializers.SerializerMethodField()
+    profile = UserProfileSerializer(read_only=True) 
 
     class Meta:
         model = User
