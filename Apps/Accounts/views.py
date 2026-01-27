@@ -8,7 +8,7 @@ from .serializers import (
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from .models import UserProfile
 
 class RegisterView(APIView):
     """
@@ -59,5 +59,5 @@ class LoginView(APIView):
 class UserProfileView(APIView):
 
     def get(self, request):
-        serializer = UserProfileSerializer(request.user)
+        serializer = UserProfileSerializer()
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -38,3 +38,11 @@ class UserProfileSerializer(serializers.Serializer):
 class Meta:
     model= UserProfile
     fields = ["username", "first_name", "last_name", "email", "phone_number" ,"profile_photo", "bio"]
+
+class UserSerializer(serializers.ModelSerializer):
+    # Nest the UserProfileSerializer to handle user profile data together with the user
+    profile = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'profile', 'is_superuser', 'is_staff']
