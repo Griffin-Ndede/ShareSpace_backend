@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "Apps.Resources",
     "Apps.Accounts",
+    "Apps.Profile",
 ]
 
 

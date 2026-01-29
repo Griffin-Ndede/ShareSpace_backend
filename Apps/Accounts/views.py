@@ -3,15 +3,12 @@ from rest_framework.response import Response
 from .serializers import (
     UserRegistrationSerializer,
     UserLoginSerializer,
-    UserProfileSerializer,
-    UserSerializer,
+   
 )
 from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import UserProfile
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 class RegisterView(APIView):
     """
@@ -59,15 +56,5 @@ class LoginView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserProfileView(APIView):
-    class UserProfileView(APIView):
-        authentication_classes = [JWTAuthentication]
-        permission_classes = [IsAuthenticated]
 
-        def get(self, request):
-            serializer = UserSerializer(
-                request.user,
-                context={'request': request}
-            )
-            return Response(serializer.data)
 
