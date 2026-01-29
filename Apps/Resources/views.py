@@ -7,7 +7,7 @@ from .models import Category, FAQ, Product
 from .serializers import (
     CategoriesSerializer, 
     FAQsSerializer, 
-    ProductsSerializer,  
+    ProductsSerializer,
     ProductDetailsSerializer, 
     ContactFormSerializer
 )

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "Apps.Resources",
     "Apps.Accounts",
     "Apps.Profile",
+    "Apps.Listings"
 ]
 
 
