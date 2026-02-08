@@ -20,20 +20,20 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ['id', 'image']  # Include the necessary fields
 
 
-class ProductsSerializer(serializers.ModelSerializer):
-    photos = ProductImageSerializer(many=True, read_only=True)  # Nested serializer for photos
+# class ProductsSerializer(serializers.ModelSerializer):
+#     photos = ProductImageSerializer(many=True, read_only=True)  # Nested serializer for photos
 
-    class Meta:
-        model = Product
-        fields = "__all__"
+#     class Meta:
+#         model = Product
+#         fields = "__all__"
 
 
-class ProductDetailsSerializer(serializers.ModelSerializer):
-    photos = ProductImageSerializer(many=True, read_only=True)  # Nested serializer for photos
+# class ProductDetailsSerializer(serializers.ModelSerializer):
+#     photos = ProductImageSerializer(many=True, read_only=True)  # Nested serializer for photos
 
-    class Meta:
-        model = Product
-        fields = "__all__"
+#     class Meta:
+#         model = Product
+#         fields = "__all__"
 
 
 class ContactFormSerializer(serializers.ModelSerializer):
