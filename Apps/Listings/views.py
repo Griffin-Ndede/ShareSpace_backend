@@ -4,8 +4,10 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Listing
-from .serializers import ListingSerializer
+from .serializers import ListingSerializer, myListingsSerializer
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication   
 
 # Create your views here.
 
@@ -29,4 +31,14 @@ class ListingDetailView(APIView):
     def get(self, request, id):
         listing = get_object_or_404(Listing, id=id)
         serializer = ListingSerializer(listing)
+        return Response(serializer.data)
+    
+class myListingsView(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        listings = Listing.objects.filter(owner=request.user)
+        serializer = myListingsSerializer(listings, many=True)
         return Response(serializer.data)

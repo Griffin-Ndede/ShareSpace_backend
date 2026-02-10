@@ -6,7 +6,7 @@ User = get_user_model()
 
 # Create your models here.
 class Listing(models.Model):
-    owner = models.OneToOneField(
+    owner = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="listings", null=True
     )
     category = models.CharField(max_length=255)
