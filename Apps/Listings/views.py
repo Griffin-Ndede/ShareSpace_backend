@@ -17,7 +17,7 @@ class ListingView(APIView):
     def get(self, request):
         listing = Listing.objects.all()
         serializer = ListingSerializer(listing, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = ListingSerializer(data=request.data)
@@ -42,3 +42,8 @@ class myListingsView(APIView):
         listings = Listing.objects.filter(owner=request.user)
         serializer = myListingsSerializer(listings, many=True)
         return Response(serializer.data)
+    
+    def delete(self, request, id):
+        listing = get_object_or_404(Listing, id=id, owner=request.user)
+        listing.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
