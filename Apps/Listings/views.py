@@ -7,12 +7,16 @@ from .models import Listing
 from .serializers import ListingSerializer, myListingsSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.authentication import JWTAuthentication   
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Create your views here.
 
+
 class ListingView(APIView):
     parser_classes = (MultiPartParser, FormParser)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
     def get(self, request):
         listing = Listing.objects.all()
@@ -22,17 +26,16 @@ class ListingView(APIView):
     def post(self, request):
         serializer = ListingSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(owner=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 class ListingDetailView(APIView):
 
     def get(self, request, id):
         listing = get_object_or_404(Listing, id=id)
         serializer = ListingSerializer(listing)
         return Response(serializer.data)
-    
 class myListingsView(APIView):
 
     authentication_classes = [JWTAuthentication]
@@ -42,7 +45,7 @@ class myListingsView(APIView):
         listings = Listing.objects.filter(owner=request.user)
         serializer = myListingsSerializer(listings, many=True)
         return Response(serializer.data)
-    
+
     def delete(self, request, id):
         listing = get_object_or_404(Listing, id=id, owner=request.user)
         listing.delete()

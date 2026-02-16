@@ -4,7 +4,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-load_dotenv(".env")
+# Load environment variables from .env file
+load_dotenv()
 
 # import dj_database_url
 from datetime import timedelta
@@ -101,6 +102,17 @@ DATABASES = {
     }
 }
 
+# Cloudinary configuration
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
+
+# set the default file storage to Cloudinary
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+# settings.py
+MEDIA_URL = "/media/"
+# MEDIA_ROOT is often not strictly necessary if using Cloudinary for all media
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 AUTH_USER_MODEL = "Accounts.User"
  
 
@@ -141,6 +153,3 @@ STORAGES = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"

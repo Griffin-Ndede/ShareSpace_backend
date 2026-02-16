@@ -10,10 +10,11 @@ class OwnerSerializer(serializers.ModelSerializer):
 
 class ListingSerializer(serializers.ModelSerializer):
     owner = OwnerSerializer(read_only=True)
-
     class Meta:
         model = Listing
         fields = "__all__"
+        read_only_fields = ["owner"]
+
 
 
 class myListingsSerializer(serializers.ModelSerializer):
