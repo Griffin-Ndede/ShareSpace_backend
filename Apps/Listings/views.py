@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Listing
@@ -13,7 +13,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class ListingView(APIView):
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, JSONParser  )
+    # permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

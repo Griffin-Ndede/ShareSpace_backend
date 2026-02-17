@@ -14,7 +14,7 @@ class Listing(models.Model):
     category = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image = CloudinaryField('products', null=True)
+    image_url = models.JSONField(default=list, blank=True)
     startDate = models.DateField(null=True)
     endDate = models.DateField(null=True)
     condition = models.CharField(max_length=255)
