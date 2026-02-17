@@ -13,8 +13,8 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class ListingView(APIView):
-    parser_classes = (MultiPartParser, JSONParser  )
-    # permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, JSONParser)
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -31,12 +31,15 @@ class ListingView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ListingDetailView(APIView):
 
     def get(self, request, id):
         listing = get_object_or_404(Listing, id=id)
         serializer = ListingSerializer(listing)
         return Response(serializer.data)
+
+
 class myListingsView(APIView):
 
     authentication_classes = [JWTAuthentication]
