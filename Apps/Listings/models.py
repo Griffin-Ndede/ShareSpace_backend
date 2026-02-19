@@ -24,7 +24,9 @@ class Listing(models.Model):
     endDate = models.DateField(null=True, blank=True)
 
     # Step 3
-    dailyRate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    dailyRate = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
     weeklyRate = models.DecimalField(
         max_digits=10, decimal_places=2, blank=True, null=True
     )
@@ -37,3 +39,50 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class RentalRequest(models.Model):
+    STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("accepted", "Accepted"),
+        ("rejected", "Rejected"),
+        ("completed", "Completed"),
+    ]
+    listing = models.ForeignKey(
+        Listing, on_delete=models.CASCADE, related_name="rental_requests"
+    )
+    renter = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="rental_requests"
+    )
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="received_requests"
+    )
+
+    start_date = models.DateField()
+    end_date = models.DateField()
+    status = models.CharField(
+        max_length=20, default="pending"
+    )  # pending, accepted, rejected
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.renter.username} - {self.listing.title} ({self.status})"
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="notifications"
+    )
+    title = models.CharField(max_length=255)
+    message = models.TextField()
+    link = models.CharField(max_length=255, blank=True, null=True)  # optional
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.user.username} - {self.title}"

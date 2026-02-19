@@ -36,31 +36,6 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-class Product(models.Model):
-    category = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    startDate = models.DateField(null=True)
-    endDate = models.DateField(null=True)
-    condition = models.CharField(max_length=255)
-    location = models.CharField(max_length=255)
-    deposit = models.CharField(max_length=255, null=True)
-    accessories = models.CharField(max_length=255, null=True)
-    name = models.CharField(max_length=255)
-    phoneNumber = models.IntegerField(null=True)
-    emailAddress = models.CharField(max_length=255, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return self.title
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='photos')
-    image = models.ImageField(upload_to=upload_to, validators=[ValidateImageFileExtension()])
-
-    def __str__(self):
-        return f"Image for {self.product.title}"
-
 class ContactForm1(models.Model):
     name = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
