@@ -4,8 +4,11 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-    is_renter = models.BooleanField(default=True)
-    is_lister = models.BooleanField(default=False)
+    ROLE_CHOICES = [
+        ("renter", "Renter"),
+        ("owner", "Owner"),
+    ]
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="renter")
 
 
 

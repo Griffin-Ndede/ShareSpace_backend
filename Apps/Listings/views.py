@@ -33,6 +33,12 @@ class ListingView(APIView):
         serializer = ListingSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(owner=request.user)
+            # Update user role from renter to owner
+            user = request.user
+            if user.role != "owner":
+                user.role = "owner"
+                user.save(update_fields=["role"])
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
