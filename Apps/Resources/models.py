@@ -6,7 +6,7 @@ import os
 # Validators
 @deconstructible
 class ValidateImageFileExtension:
-    valid_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff']
+    valid_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.avif', '.webp']
 
     def __call__(self, value):
         ext = os.path.splitext(value.name)[1]
