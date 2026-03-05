@@ -11,7 +11,7 @@ class ListingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
         fields = "__all__"
-        read_only_fields = ["owner"]
+        read_only_fields = ["owner", "created_at", "updated_at"]
 class myListingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
