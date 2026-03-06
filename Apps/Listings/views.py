@@ -105,8 +105,7 @@ class RentalRequestView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class NotificationView(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+  
 
     def get(self, request):
         notifications = Notification.objects.filter(user=request.user).order_by("-created_at")
