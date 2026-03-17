@@ -21,7 +21,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "sharespace-backend-4vs9.onrender.com",
+    "sharespace-backend-tcuf.onrender.com",
 ]
 
 INSTALLED_APPS = [
@@ -109,6 +109,8 @@ DATABASES = {
     "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
+print("TYPE:", type(os.environ.get("DATABASE_URL"))) 
+print("DATABASE_URL VALUE:", repr(os.environ.get("DATABASE_URL")))
 # Cloudinary configuration
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
