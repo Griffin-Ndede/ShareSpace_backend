@@ -105,17 +105,19 @@ REST_FRAMEWORK = {
 # }
 
 
+database_url = os.environ.get("DATABASE_URL")
+if not database_url:
+    raise ValueError("DATABASE_URL environment variable is not set")
+
 DATABASES = {
-    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    "default": dj_database_url.config(default=database_url, conn_max_age=600)
 }
 
-print("TYPE:", type(os.environ.get("DATABASE_URL"))) 
-print("DATABASE_URL VALUE:", repr(os.environ.get("DATABASE_URL")))
 # Cloudinary configuration
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
 # set the default file storage to Cloudinary
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # settings.py
 MEDIA_URL = "/media/"
