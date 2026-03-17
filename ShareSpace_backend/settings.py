@@ -3,6 +3,8 @@ from pathlib import Path
 
 import os
 from dotenv import load_dotenv
+import dj_database_url 
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -95,13 +97,15 @@ REST_FRAMEWORK = {
     ),
 }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
-
 # Cloudinary configuration
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
