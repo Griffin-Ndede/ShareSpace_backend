@@ -3,7 +3,7 @@ from pathlib import Path
 
 import os
 from dotenv import load_dotenv
-import dj_database_url 
+import dj_database_url
 
 
 # Load environment variables from .env file
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "Apps.Resources",
     "Apps.Accounts",
     "Apps.Profile",
-    "Apps.Listings"
+    "Apps.Listings",
 ]
 
 
@@ -103,9 +103,14 @@ REST_FRAMEWORK = {
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+
 DATABASES = {
-    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    "default": dj_database_url.parse(
+        os.environ.get("DATABASE_URL", ""),
+        conn_max_age=600,
+    )
 }
+
 # Cloudinary configuration
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
@@ -118,7 +123,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "Accounts.User"
- 
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
