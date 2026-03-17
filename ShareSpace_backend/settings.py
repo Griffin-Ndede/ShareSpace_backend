@@ -3,14 +3,13 @@ from pathlib import Path
 
 import os
 from dotenv import load_dotenv
+from datetime import timedelta
+
 import dj_database_url
 
 
 # Load environment variables from .env file
 load_dotenv()
-
-# import dj_database_url
-from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -104,11 +103,8 @@ REST_FRAMEWORK = {
 #     }
 # }
 
-
 DATABASES = {
-    "default": dj_database_url.config(
-        default="postgresql://sharespace_db_tb8y_user:XL045ZM7J71up6hQbSuLCA7HVGUAbwwq@dpg-d6sk3jngi27c73d61iu0-a.oregon-postgres.render.com/sharespace_db_tb8y"
-    )
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 # Cloudinary configuration
