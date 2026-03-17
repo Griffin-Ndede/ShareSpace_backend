@@ -105,19 +105,17 @@ REST_FRAMEWORK = {
 # }
 
 
-database_url = os.environ.get("DATABASE_URL")
-if not database_url:
-    raise ValueError("DATABASE_URL environment variable is not set")
-
 DATABASES = {
-    "default": dj_database_url.config(default=database_url, conn_max_age=600)
+    "default": dj_database_url.config(
+        default="postgresql://sharespace_db_tb8y_user:XL045ZM7J71up6hQbSuLCA7HVGUAbwwq@dpg-d6sk3jngi27c73d61iu0-a.oregon-postgres.render.com/sharespace_db_tb8y"
+    )
 }
 
 # Cloudinary configuration
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
 # set the default file storage to Cloudinary
-# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # settings.py
 MEDIA_URL = "/media/"
