@@ -96,21 +96,21 @@ REST_FRAMEWORK = {
     ),
 }
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
-
-# DATABASES using DATABASE_URL
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.environ.get("DATABASE_URL"),
-        conn_max_age=600,
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
+
+
+# # DATABASES using DATABASE_URL
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         default=os.environ.get("DATABASE_URL"),
+#         conn_max_age=600,
+#     )
+# }
 
 # Cloudinary configuration
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
@@ -120,7 +120,6 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # settings.py
 MEDIA_URL = "/media/"
-# MEDIA_ROOT is often not strictly necessary if using Cloudinary for all media
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "Accounts.User"
