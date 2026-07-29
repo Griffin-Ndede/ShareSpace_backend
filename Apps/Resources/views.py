@@ -3,10 +3,10 @@ from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from .models import Category, FAQ
+from .models import Category
 from .serializers import (
     CategoriesSerializer, 
-    FAQsSerializer, 
+    # FAQsSerializer, 
     ContactFormSerializer
 )
 
@@ -14,19 +14,19 @@ class Home(APIView):
     def get(self, request):
         return Response({'message': 'Hello, World!'})
 
-class FAQsCreateView(APIView):
-    def post(self, request):
-        serializer = FAQsSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class FAQsCreateView(APIView):
+#     def post(self, request):
+#         serializer = FAQsSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class FAQsListView(APIView):
-    def get(self, request):
-        faqs = FAQ.objects.all()
-        serializer = FAQsSerializer(faqs, many=True)
-        return Response(serializer.data)
+# class FAQsListView(APIView):
+#     def get(self, request):
+#         faqs = FAQ.objects.all()
+#         serializer = FAQsSerializer(faqs, many=True)
+#         return Response(serializer.data)
 
 class CategoriesView(APIView):
     parser_classes = (MultiPartParser, FormParser)

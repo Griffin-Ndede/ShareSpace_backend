@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import Category, FAQ, ContactForm1
+from .models import Category, ContactForm1
 
 
-class FAQsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FAQ
-        fields = '__all__'
+# class FAQsSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = FAQ
+#         fields = '__all__'
 
 class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:

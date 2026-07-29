@@ -17,17 +17,11 @@ class ValidateImageFileExtension:
 def upload_to(instance, filename):
     if isinstance(instance, Category):
         return f'category_images/{filename}'
-    elif isinstance(instance, ProductImage):
+    elif isinstance(instance, ):
         return f'product_images/{filename}'
     return f'uploads/{filename}'
 
 # Models
-class FAQ(models.Model):
-    title = models.CharField(max_length=100)
-    answer = models.TextField(max_length=300)
-
-    def __str__(self):
-        return self.title
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
