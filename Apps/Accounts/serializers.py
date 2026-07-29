@@ -1,31 +1,67 @@
 from rest_framework import serializers
-from .models import User
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    """
-    Serializer for registering a new user.
-    """
 
     class Meta:
         model = User
-        fields = ["username", "first_name", "last_name", "email", "password", "role"]
+        fields = [
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "password",
+            "role",
+        ]
 
-    def validate_password(self, value):
-        return make_password(value)  # Hash the password
+        extra_kwargs = {
+            "password": {
+                "write_only": True
+            }
+        }
+
+
+    def validate_email(self, value):
+        if User.objects.filter(email__iexact=value).exists():
+            raise serializers.ValidationError(
+                "An account with this email already exists."
+            )
+
+        return value.lower()
+
 
     def create(self, validated_data):
-        return User.objects.create(**validated_data)
+
+        user = User.objects.create_user(
+            **validated_data
+        )
+
+        return user
+
+
 
 class UserLoginSerializer(serializers.Serializer):
-    """
-    Serializer for user login.
-    """
 
-    username = serializers.CharField(required=True)
-    password = serializers.CharField(write_only=True, required=True)
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
 
+
+from Apps.Profile.serializers import UserProfileSerializer
+
+class UserSerializer(serializers.ModelSerializer):
+    profile = UserProfileSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "role",
+            "profile",
+        ]

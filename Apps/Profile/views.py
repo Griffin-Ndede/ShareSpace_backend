@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserProfileSerializer, UserSerializer
+from Apps.Accounts.serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -12,5 +12,5 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        serializer = UserSerializer(request.user, context={"request": request})
+        serializer = UserSerializer(request.user)
         return Response(serializer.data)
