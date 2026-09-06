@@ -1,18 +1,39 @@
 import os
 from pathlib import Path
-
-import os
 from dotenv import load_dotenv
 from datetime import timedelta
 
 import dj_database_url
 
+import firebase_admin
+from firebase_admin import credentials
 
-# Load environment variables from .env file
+
+# Load environment variables from .env file (explicit path, safe under Passenger/cPanel)
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Firebase initialization 
+if not firebase_admin._apps:
+    cred = credentials.Certificate(
+        {
+            "type": os.getenv("FIREBASE_TYPE"),
+            "project_id": os.getenv("FIREBASE_PROJECT_ID"),
+            "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
+            "private_key": os.getenv("FIREBASE_PRIVATE_KEY", "").replace("\\n", "\n"),
+            "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
+            "client_id": os.getenv("FIREBASE_CLIENT_ID"),
+            "auth_uri": os.getenv("FIREBASE_AUTH_URI"),
+            "token_uri": os.getenv("FIREBASE_TOKEN_URI"),
+            "auth_provider_x509_cert_url": os.getenv("FIREBASE_AUTH_PROVIDER_CERT_URL"),
+            "client_x509_cert_url": os.getenv("FIREBASE_CLIENT_CERT_URL"),
+            "universe_domain": os.getenv("FIREBASE_UNIVERSE_DOMAIN"),
+        }
+    )
+
+    firebase_admin.initialize_app(cred)
+# --- End Firebase initialization ---
 SECRET_KEY = "django-insecure-ky^rbr+4fm#-#_lqcs+e8dk1b(+6*335e8^owo1z@tl4c&v$-!"
 
 DEBUG = True
@@ -20,7 +41,9 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "sharespace-backend-tcuf.onrender.com",
+    "api.sharespace.africa",
+    "www.api.sharespace.africa",
+
 ]
 
 INSTALLED_APPS = [
@@ -57,8 +80,8 @@ CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",
     "http://localhost:8000",
     "http://localhost:5173",
-    "https://sharespaces.netlify.app",
-)
+    "https://sharespace.africa",
+    "https://www.sharespace.africa",)
 
 ROOT_URLCONF = "ShareSpace_backend.urls"
 

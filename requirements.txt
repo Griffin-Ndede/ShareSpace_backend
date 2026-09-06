@@ -43,7 +43,7 @@ packaging==26.0
 pillow==11.1.0
 proto-plus==1.28.2
 protobuf==7.35.1
-psycopg2==2.9.10
+psycopg2-binary==2.9.10
 pyasn1==0.6.4
 pyasn1_modules==0.4.2
 pycparser==2.22
