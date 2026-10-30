@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -157,10 +156,7 @@ class RentalRequest(models.Model):
     )
 
     def __str__(self):
-        return (
-            f"{self.renter.username} - "
-            f"{self.listing.title} ({self.status})"
-        )
+        return f"{self.renter.username} - " f"{self.listing.title} ({self.status})"
 
 
 class Notification(models.Model):
@@ -184,6 +180,7 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.title}"
+
 
 class ListingModerationEvent(models.Model):
     ACTION_CHOICES = [

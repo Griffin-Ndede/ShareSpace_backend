@@ -7,17 +7,17 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
 
     ROLE_CHOICES = [
+        ("rentee", "Rentee"),
         ("renter", "Renter"),
-        ("owner", "Owner"),
+        ("both", "Both"),
     ]
 
     role = models.CharField(
         max_length=10,
         choices=ROLE_CHOICES,
-        default="renter",
+        default="rentee",
         db_index=True,
     )
-
     VERIFICATION_CHOICES = [
         ("unverified", "Unverified"),
         ("pending", "Pending verification"),

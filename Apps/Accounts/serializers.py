@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from Apps.Profile.serializers import UserProfileSerializer
 
 User = get_user_model()
@@ -51,9 +53,25 @@ class UserSerializer(serializers.ModelSerializer):
             "profile",
             "verification_status",
             "verified_at",
+            "is_staff",
+            "is_superuser",
         ]
         read_only_fields = [
             "id",
             "verification_status",
             "verified_at",
+            "is_staff",
+            "is_superuser",
         ]
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    def validate(self, attrs):
+        # Authenticate user and generate JWT tokens
+        data = super().validate(attrs)
+
+        # Add authenticated user's details to the response
+        data["user"] = UserSerializer(self.user).data
+
+        return data

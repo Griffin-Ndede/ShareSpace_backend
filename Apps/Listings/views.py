@@ -148,8 +148,8 @@ class MyListingsView(APIView):
 
 
 class ListingModerationView(APIView):
-    # authentication_classes = [JWTAuthentication]
-    # permission_classes = [IsAuthenticated, IsAdminUser]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
     def get(self, request):
         # Staff can filter the moderation queue using ?status=pending_review
@@ -279,7 +279,57 @@ class ListingModerationView(APIView):
             status=status.HTTP_200_OK,
         )
 
+class ModerationHistoryView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
+    def get(self, request):
+        events = (
+            ListingModerationEvent.objects
+            .select_related(
+                "listing",
+                "listing__owner",
+                "moderator",
+            )
+            .order_by("-created_at", "-id")
+        )
+
+        history = []
+
+        for event in events:
+            listing = event.listing
+            owner = listing.owner
+            moderator = event.moderator
+
+            owner_name = (
+                f"{owner.first_name} {owner.last_name}".strip()
+                or owner.username
+                or owner.email
+            ) if owner else "Not recorded"
+
+            moderator_name = (
+                f"{moderator.first_name} {moderator.last_name}".strip()
+                or moderator.username
+                or moderator.email
+            ) if moderator else "System"
+
+            history.append({
+                "id": event.id,
+                "listing_id": listing.id,
+                "listing_title": listing.title,
+                "owner": owner_name,
+                "moderator": moderator_name,
+                "action": event.action,
+                "notes": event.notes,
+                "created_at": event.created_at,
+                "listing_status": listing.status,
+                "location": getattr(listing, "location", ""),
+            })
+
+        return Response(
+            history,
+            status=status.HTTP_200_OK,
+        )
 class RentalRequestView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
